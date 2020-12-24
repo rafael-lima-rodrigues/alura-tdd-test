@@ -55,5 +55,28 @@ public class LeilaoTest {
 		assertEquals(1, leilao.getLances().size());
 		assertEquals(2000, leilao.getLances().get(0).getValor());
 	}
+	
+	@Test
+	public void deveDobrarOUltimoLanceDado() {
+		Leilao leilao = new Leilao("Macbook");
+		Usuario steveJobs = new Usuario("Steve");
+		Usuario billGates = new Usuario("Bill");
+		
+		leilao.propoe(new Lance(steveJobs, 1000));
+		leilao.propoe(new Lance(billGates, 2000));
+		leilao.dobraLance(steveJobs);
+		
+		assertEquals(2000, leilao.getLances().get(2).getValor(), 0.00001);
+	}
+	
+	@Test
+	public void naoDeveDobrarCasoNaoHajaLanceAnterior() {
+		Leilao leilao = new Leilao("Mcbook 15");
+		Usuario steveJobs = new Usuario("Steve");
+		
+		leilao.dobraLance(steveJobs);
+		
+		assertEquals(0, leilao.getLances().size());
+	}
 
 }
