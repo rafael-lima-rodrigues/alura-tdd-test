@@ -2,6 +2,7 @@ package br.com.caelum.leilao.teste;
 
 
 
+import br.com.caelum.leilao.builder.CriadorDeLeilao;
 import br.com.caelum.leilao.dominio.Lance;
 import br.com.caelum.leilao.dominio.Leilao;
 import br.com.caelum.leilao.dominio.Usuario;
@@ -27,6 +28,21 @@ public class TesteDoAvaliador {
 		joao = new Usuario("joao");
 		jose = new Usuario("jose");
 		maria = new Usuario("maria");
+	}
+	
+	@After
+	public void finaliza() {
+	  System.out.println("fim");
+	}
+	
+	@BeforeClass
+	public static void testandoBeforeClass() {
+	  System.out.println("before class");
+	}
+
+	@AfterClass
+	public static void testandoAfterClass() {
+	  System.out.println("after class");
 	}
 
 	@Test
@@ -137,13 +153,10 @@ public class TesteDoAvaliador {
 	@Test
 	public void tresMaioresLances() {
 
-		Leilao leilao =  new Leilao("Playstation 3");
-		
-		leilao.propoe(new Lance(joao, 1000.0));
-		leilao.propoe(new Lance(maria, 2000.0));
-		leilao.propoe(new Lance(joao, 3000.0));
-		leilao.propoe(new Lance(maria, 4000.0));
-		
+		Leilao leilao = new CriadorDeLeilao().para("Play 3")
+				.lance(joao, 3000.0)
+				.lance(maria, 2000.0)
+				.lance(joao, 4000.0).constroi();
 		//criaAvaliador();
 		leiloeiro.maioresLances(leilao);
 		
